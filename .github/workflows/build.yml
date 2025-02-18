@@ -1,0 +1,48 @@
+name: Update Donations Data + Rebuild Webpage
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # run every 10 minutes
+  workflow_dispatch:  # allows manual triggering of the action
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: fetch/pull
+        run: |
+          git fetch
+          git pull
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: install python libs
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+          pip install matplotlib
+
+      - name: update data + images
+        run: python givesendgo.py
+
+      - name: commit updated stuff
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "update donations.json/csv"
+          git push
+
+      - name: deploy to gh pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./pages

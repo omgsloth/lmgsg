@@ -2,8 +2,8 @@ name: Update Donations Data + Rebuild Webpage
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # run every 10 minutes
-  workflow_dispatch:  # allows manual triggering of the action
+    - cron: "0 */10 * * * *"
+  workflow_dispatch:
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
       - name: set up python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: install python libs
         run: |

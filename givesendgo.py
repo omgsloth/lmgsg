@@ -47,9 +47,10 @@ def to_csv():
     with open(f"{data_path}.csv", "w") as csv:
         csv.write(f"id, time, amount, name, anon, lovecount, comment\n")
         for dono in donos_dict.values():
+            name = dono['donation_name'].strip("\n").replace("\n", "\\n")
             comment = dono["donation_comment"].strip("\n").replace("\n", "\\n")
             csv.write(f"{dono['donation_id']}, {dono['time']}, {dono['donation_amount']}, "
-                      f"{dono['donation_name']}, {dono['donation_anonymous']}, "
+                      f"{name}, {dono['donation_anonymous']}, "
                       f"{dono['lovecount']}, {comment}\n")
 
 

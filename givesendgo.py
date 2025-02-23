@@ -104,7 +104,7 @@ def graph():
     ax_3 = plt.gca()
     ax_3.xaxis.set_major_locator(mdates.HourLocator(interval=12))
     ax_3.xaxis.set_major_formatter(mdates.DateFormatter("%d+%H"))  # format date
-    ax_3.set_xlim(left=dt(2025, 2, 4)+td(hours=-6), right=dt.now()+td(hours=1))
+    ax_3.set_xlim(left=dt(2025, 2, 4), right=dt.now()+td(hours=12))
     ax_3.set_ylim(bottom=220000)
     plt.xlabel("day+hour")
     plt.xticks(rotation=90)

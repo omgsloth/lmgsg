@@ -3,6 +3,7 @@ import requests
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime as dt
+from datetime import timedelta as td
 
 data_path = "pages/data/donations"
 imgs_subdir = "pages/images"
@@ -92,7 +93,7 @@ def graph():
     ax_2.xaxis.set_major_formatter(mdates.DateFormatter("%b %d"))  # format date
     plt.xlabel("day")
     plt.ylabel("total ($)")
-    plt.title("donations over time")
+    plt.title("total raised")
     plt.grid(True)
     plt.tight_layout()
     all_time.savefig(f"{imgs_subdir}/all_time.png")
@@ -103,12 +104,12 @@ def graph():
     ax_3 = plt.gca()
     ax_3.xaxis.set_major_locator(mdates.HourLocator(interval=12))
     ax_3.xaxis.set_major_formatter(mdates.DateFormatter("%d+%H"))  # format date
-    ax_3.set_xlim(left=dt(2025, 2, 4), right=dt.now())
+    ax_3.set_xlim(left=dt(2025, 2, 4)+td(hours=-6), right=dt.now()+td(hours=1))
     ax_3.set_ylim(bottom=220000)
     plt.xlabel("day+hour")
     plt.xticks(rotation=90)
     plt.ylabel("total ($)")
-    plt.title("donations over time")
+    plt.title("total raised since KFA statement")
     plt.grid(True)
     plt.tight_layout()
     since_article.savefig(f"{imgs_subdir}/since_article.png")
